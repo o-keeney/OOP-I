@@ -14,7 +14,7 @@ final class SUV extends Car
     {
         return numberOfSeats;
     }
-    
+
     @Override
     public String toString()
     {
