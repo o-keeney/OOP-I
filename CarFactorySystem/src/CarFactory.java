@@ -3,28 +3,34 @@ import java.util.List;
 import Factory.Car;
 import Factory.Enums.ProductionStatus;
 
-public class CarFactory
+// Interface example
+public class CarFactory implements ICarFactory
 {
     private String factoryName;
     private int capacity;
     private List<Car> cars = new ArrayList<>();
+    private int currentStockLevel;
 
-    public CarFactory(String factoryName, int capacity)
+    public CarFactory(String factoryName, int capacity, int currentStockLevel)
     {
         this.factoryName = factoryName;
         this.capacity = capacity;
+        this.currentStockLevel = currentStockLevel;
     }
 
-    // Primary constructor - uses this() to assign value to factory
-    // while assigning default value to capacity
+    // Primary constructor - uses this() to assign name and and default value for capacity
     public CarFactory(String factoryName)
     {
-        this(factoryName, 5);
+        this(factoryName, 5, 0);
     }
 
     public List<Car> getAllCars()
     {
         return cars;
+    }
+
+    public int getCurrentStockLevel(){
+        return currentStockLevel;
     }
 
     public void addCar(Car car) throws FactoryFullException
@@ -35,6 +41,7 @@ public class CarFactory
         }
 
         cars.add(car);
+        currentStockLevel++;
         System.out.println(car.toString() + " added to " + factoryName);
     }
 
