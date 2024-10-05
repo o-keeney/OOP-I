@@ -1,6 +1,6 @@
 package Factory;
 
-final class SportsCar extends Car
+public final class SportsCar extends Car
 {
     private int horsePower;
 

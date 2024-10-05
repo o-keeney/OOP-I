@@ -1,6 +1,6 @@
 package Factory;
 
-final class SUV extends Car
+public final class SUV extends Car
 {
     private int numberOfSeats;
 

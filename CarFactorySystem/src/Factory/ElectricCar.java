@@ -1,6 +1,6 @@
 package Factory;
 
-final class ElectricCar extends Car
+public final class ElectricCar extends Car
 {
     private int rangeInMiles;
 

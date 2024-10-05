@@ -1,6 +1,6 @@
 package Factory;
 
-final class HybridCar extends Car
+public final class HybridCar extends Car
 {
     private int milesPerKwh;
 
