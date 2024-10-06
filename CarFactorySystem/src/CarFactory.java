@@ -55,6 +55,10 @@ public class CarFactory implements ICarFactory
         return currentStockLevel;
     }
 
+    public int getCapacity(){
+        return capacity;
+    }
+
     public List<Car> searchCarsByMake(String make)
     {
         // Define a predicate to filter cars by the make property

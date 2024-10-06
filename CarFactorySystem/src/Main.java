@@ -218,8 +218,7 @@ public class Main
 
         try
         {
-            Main.carFactory.addCars(carsToAdd.toArray(new Car[0]));
-            System.out.println("All Cars have been added to factory...");
+            Main.carFactory.addCarsWithValidation(carsToAdd.toArray(new Car[0]));
         }
         catch (FactoryFullException e)
         {
@@ -256,6 +255,8 @@ public class Main
         System.out.println(car1 + " - High Performance ? " + isHighPerformance.test(car1));
         System.out.println(sportsCar + " - High Performance ? " + isHighPerformance.test(sportsCar));
 
+        //Default interface method
+        carFactory.showCurrentCapacity(carFactory.getAllCars().size(), carFactory.getCapacity());
 
         // Check factory production status - enum example
         System.out.println("Factory production status: " + factory.getProductionStatus());
