@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ICarFactory
 {
-    void addCar (Car car) throws FactoryFullException;
+    void addCars (Car... carsList) throws FactoryFullException;
     List<Car> getAllCars();
     ProductionStatus getProductionStatus();
     List<Car> searchCarsByMake(String make);

@@ -66,16 +66,19 @@ public class CarFactory implements ICarFactory
                 .collect(Collectors.toList());
     }
 
-    public void addCar(Car car) throws FactoryFullException
+    public void addCars(Car... carsList) throws FactoryFullException
     {
-        if (cars.size() >= capacity)
+        for (Car car : carsList)
         {
-            throw new FactoryFullException("Factory at capacity...");
-        }
+            if (cars.size() >= capacity)
+            {
+                throw new FactoryFullException("Factory at capacity...");
+            }
 
-        cars.add(car);
-        currentStockLevel++;
-        System.out.println(car.toString() + " added to " + factoryName);
+            cars.add(car);
+            currentStockLevel++;
+            System.out.println(car.toString() + " added to " + factoryName);
+        }
     }
 
     public ProductionStatus getProductionStatus()

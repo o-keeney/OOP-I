@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -16,7 +17,7 @@ public class Main
         do
         {
             System.out.println("\nCar Factory Menu:");
-            System.out.println("1. Add Car");
+            System.out.println("1. Add Car(s)");
             System.out.println("2. View All Cars");
             System.out.println("3. Get Production Status");
             System.out.println("4. Search Factory Inventory By Make");
@@ -36,7 +37,7 @@ public class Main
                     }
                     else
                     {
-                        addCar(scanner);
+                        addCars(scanner);
                     }
                     break;
                 case 2:
@@ -134,75 +135,91 @@ public class Main
         }
     }
 
-    private static void addCar(Scanner scanner)
+    private static void addCars(Scanner scanner)
     {
-        System.out.println("\nSelect Car Type:");
-        System.out.println("1. Sports Car");
-        System.out.println("2. SUV");
-        System.out.println("3. Electric Car");
-        System.out.println("4. Hybrid Car");
-        System.out.print("Enter your choice: ");
+        int choice;
+        List<Car> carsToAdd = new ArrayList<>();
+        do
+        {
+            System.out.println("\nSelect Car Type:");
+            System.out.println("1. Sports Car");
+            System.out.println("2. SUV");
+            System.out.println("3. Electric Car");
+            System.out.println("4. Hybrid Car");
+            System.out.println("5. Finished Adding Cars");
+            System.out.print("Enter your choice: ");
 
-        int carTypeChoice = scanner.nextInt();
-        scanner.nextLine();  // Consume newline
+            choice = scanner.nextInt();
+            scanner.nextLine();  // Consume newline
+            Car car = null;
+            String make, model;
+            int year;
 
-        Car car;
-        String make, model;
-        int year;
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter make: ");
+                    make = scanner.nextLine();
+                    System.out.print("Enter model: ");
+                    model = scanner.nextLine();
+                    System.out.print("Enter year: ");
+                    year = scanner.nextInt();
+                    System.out.print("Enter horsepower: ");
+                    int horsepower = scanner.nextInt();
+                    car = new SportsCar(make, model, year, horsepower);
+                    break;
+                case 2:
+                    System.out.print("Enter make: ");
+                    make = scanner.nextLine();
+                    System.out.print("Enter model: ");
+                    model = scanner.nextLine();
+                    System.out.print("Enter year: ");
+                    year = scanner.nextInt();
+                    System.out.println("Seating Capacity: ");
+                    var seatingCapacity = scanner.nextInt();
+                    car = new SUV(make, model, year, seatingCapacity);
+                    break;
+                case 3:
+                    System.out.print("Enter make: ");
+                    make = scanner.nextLine();
+                    System.out.print("Enter model: ");
+                    model = scanner.nextLine();
+                    System.out.print("Enter year: ");
+                    year = scanner.nextInt();
+                    System.out.println("Range (miles): ");
+                    var rangeInMiles = scanner.nextInt();
+                    car = new ElectricCar(make, model, year, rangeInMiles);
+                    break;
+                case 4:
+                    System.out.print("Enter make: ");
+                    make = scanner.nextLine();
+                    System.out.print("Enter model: ");
+                    model = scanner.nextLine();
+                    System.out.print("Enter year: ");
+                    year = scanner.nextInt();
+                    System.out.println("Range (Miles per kwh): ");
+                    var milesPerKwh = scanner.nextInt();
+                    car = new HybridCar(make, model, year, milesPerKwh);
+                    break;
+                case 5:
+                    System.out.println("Finalising list...");
+                    break;
+                default:
+                    System.out.println("Invalid car type selected.");
+                    return; // Exit this method
+            }
 
-        switch (carTypeChoice) {
-            case 1:
-                System.out.print("Enter make: ");
-                make = scanner.nextLine();
-                System.out.print("Enter model: ");
-                model = scanner.nextLine();
-                System.out.print("Enter year: ");
-                year = scanner.nextInt();
-                System.out.print("Enter horsepower: ");
-                int horsepower = scanner.nextInt();
-                car = new SportsCar(make, model, year, horsepower);
-                break;
-            case 2:
-                System.out.print("Enter make: ");
-                make = scanner.nextLine();
-                System.out.print("Enter model: ");
-                model = scanner.nextLine();
-                System.out.print("Enter year: ");
-                year = scanner.nextInt();
-                System.out.println("Seating Capacity: ");
-                var seatingCapacity = scanner.nextInt();
-                car = new SUV(make, model, year, seatingCapacity);
-                break;
-            case 3:
-                System.out.print("Enter make: ");
-                make = scanner.nextLine();
-                System.out.print("Enter model: ");
-                model = scanner.nextLine();
-                System.out.print("Enter year: ");
-                year = scanner.nextInt();
-                System.out.println("Range (miles): ");
-                var rangeInMiles = scanner.nextInt();
-                car = new ElectricCar(make, model, year, rangeInMiles);
-                break;
-            case 4:
-                System.out.print("Enter make: ");
-                make = scanner.nextLine();
-                System.out.print("Enter model: ");
-                model = scanner.nextLine();
-                System.out.print("Enter year: ");
-                year = scanner.nextInt();
-                System.out.println("Range (Miles per kwh): ");
-                var milesPerKwh = scanner.nextInt();
-                car = new HybridCar(make, model, year, milesPerKwh);
-                break;
-            default:
-                System.out.println("Invalid car type selected.");
-                return; // Exit this method
+            if (car != null)
+            {
+                carsToAdd.add(car);
+                System.out.println(car + " has been added to the list");
+            }
         }
+        while (choice != 5);
 
         try
         {
-            Main.carFactory.addCar(car);
+            Main.carFactory.addCars(carsToAdd.toArray(new Car[0]));
+            System.out.println("All Cars have been added to factory...");
         }
         catch (FactoryFullException e)
         {
@@ -220,8 +237,8 @@ public class Main
         CarFactory factory = new CarFactory("General Motors", 3, 0);
 
         // Add cars to factory
-        factory.addCar(car1);
-        factory.addCar(car2);
+        factory.addCars(car1);
+        factory.addCars(car2);
 
         // Iterate over car list and print information
         var allCars = factory.getAllCars();
@@ -232,7 +249,7 @@ public class Main
 
         //Polymorphism example
         Car sportsCar = new SportsCar("Ferarri", "F150", 1980, 550);
-        factory.addCar(sportsCar);
+        factory.addCars(sportsCar);
 
         // Lambda expression using predicate
         Predicate<Car> isHighPerformance = c -> c instanceof SportsCar && ((SportsCar) c).getHorsePower() > 500;
@@ -246,7 +263,7 @@ public class Main
         // Exception handling example
         try
         {
-            factory.addCar(new HybridCar("Toyota", "Prius", 2015, 150));
+            factory.addCars(new HybridCar("Toyota", "Prius", 2015, 150));
         }
         catch (FactoryFullException ex)
         {
