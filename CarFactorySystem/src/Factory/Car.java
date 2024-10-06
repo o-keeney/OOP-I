@@ -2,7 +2,8 @@ package Factory;
 
 // Fundamentals demonstrated: Inheritance, Overriding, Encapsulation, Sealed Class
 public sealed class Car
-permits SportsCar, SUV, ElectricCar, HybridCar {
+permits SportsCar, SUV, ElectricCar, HybridCar
+{
     private String make;
     private String model;
     private int year;

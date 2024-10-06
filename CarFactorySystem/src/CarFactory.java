@@ -43,7 +43,7 @@ public class CarFactory implements ICarFactory
 
     public List<Order> getOrderHistory()
     {
-        return orders;
+        return new ArrayList<>(orders);
     }
 
     public List<Car> getAllCars()
