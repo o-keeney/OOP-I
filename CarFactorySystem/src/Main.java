@@ -247,7 +247,7 @@ public class Main
         }
 
         //Polymorphism example
-        Car sportsCar = new SportsCar("Ferarri", "F150", 1980, 550);
+        Car sportsCar = new SportsCar("Ferrari", "F150", 1980, 550);
         factory.addCars(sportsCar);
 
         // Lambda expression using predicate

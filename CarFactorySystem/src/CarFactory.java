@@ -61,8 +61,12 @@ public class CarFactory implements ICarFactory
 
     public List<Car> searchCarsByMake(String make)
     {
+        // Example of a variable that is effectively final. It will never be modified after
+        // initial assignment. Admittedly a poor example
+        String makeFilter = make;
+
         // Define a predicate to filter cars by the make property
-        Predicate<Car> byMake = car -> car.getMake().equalsIgnoreCase(make);
+        Predicate<Car> byMake = car -> car.getMake().equalsIgnoreCase(makeFilter);
 
         // Use stream with the predicate to filter and collect matching cars
         return cars.stream()
