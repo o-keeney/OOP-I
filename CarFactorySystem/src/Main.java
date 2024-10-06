@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.function.Predicate;
 import Factory.*;
@@ -9,7 +7,7 @@ import Factory.Enums.ProductionStatus;
 
 public class Main
 {
-    private static CarFactory carFactory = new CarFactory("SuperCars Factory");
+    private static final CarFactory carFactory = new CarFactory("SuperCars Factory");
 
     public static void main(String[] args) throws FactoryFullException
     {
@@ -38,7 +36,7 @@ public class Main
                     }
                     else
                     {
-                        addCar(scanner, carFactory);
+                        addCar(scanner);
                     }
                     break;
                 case 2:
@@ -136,7 +134,7 @@ public class Main
         }
     }
 
-    private static void addCar(Scanner scanner, CarFactory carFactory)
+    private static void addCar(Scanner scanner)
     {
         System.out.println("\nSelect Car Type:");
         System.out.println("1. Sports Car");
@@ -148,7 +146,7 @@ public class Main
         int carTypeChoice = scanner.nextInt();
         scanner.nextLine();  // Consume newline
 
-        Car car = null;
+        Car car;
         String make, model;
         int year;
 
@@ -204,7 +202,7 @@ public class Main
 
         try
         {
-            carFactory.addCar(car);
+            Main.carFactory.addCar(car);
         }
         catch (FactoryFullException e)
         {
@@ -238,8 +236,8 @@ public class Main
 
         // Lambda expression using predicate
         Predicate<Car> isHighPerformance = c -> c instanceof SportsCar && ((SportsCar) c).getHorsePower() > 500;
-        System.out.println(car1.toString() + " - High Performance ? " + isHighPerformance.test(car1));
-        System.out.println(sportsCar.toString() + " - High Performance ? " + isHighPerformance.test(sportsCar));
+        System.out.println(car1 + " - High Performance ? " + isHighPerformance.test(car1));
+        System.out.println(sportsCar + " - High Performance ? " + isHighPerformance.test(sportsCar));
 
 
         // Check factory production status - enum example
