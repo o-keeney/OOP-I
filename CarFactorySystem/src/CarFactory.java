@@ -8,7 +8,7 @@ import Factory.Enums.ProductionStatus;
 import Factory.Order;
 
 // Interface example
-public class CarFactory implements ICarFactory
+public final class CarFactory implements ICarFactory
 {
     private String factoryName;
     private int capacity;

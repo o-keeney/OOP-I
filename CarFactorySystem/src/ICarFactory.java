@@ -5,7 +5,7 @@ import Factory.Order;
 
 import java.util.List;
 
-public interface ICarFactory
+sealed interface ICarFactory permits CarFactory
 {
     void addCars (Car... carsList) throws FactoryFullException;
     List<Car> getAllCars();
