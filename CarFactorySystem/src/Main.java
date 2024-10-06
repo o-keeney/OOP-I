@@ -21,12 +21,16 @@ public class Main
             System.out.println("1. Add Car");
             System.out.println("2. View All Cars");
             System.out.println("3. Get Production Status");
-            System.out.println("4. Run demo");
-            System.out.println("5. Exit");
+            System.out.println("4. Search Factory Inventory By Make");
+            System.out.println("5. Run Demo");
+            System.out.println("6. Place Order");
+            System.out.println("7. Get Order History");
+            System.out.println("8. Exit");
             System.out.print("Select an option: ");
             choice = scanner.nextInt();
 
-            switch (choice) {
+            switch (choice)
+            {
                 case 1:
                     if (carFactory.getProductionStatus() == ProductionStatus.FULL)
                     {
@@ -56,21 +60,84 @@ public class Main
                     System.out.println("Production Status: " + carFactory.getProductionStatus());
                     break;
                 case 4:
+                    System.out.println("Searching factory inventory...");
+                    searchFactoryInventoryByMake(scanner);
+                    break;
+                case 5:
                     System.out.println("Running demo...");
                     demoSuite();
-                case 5:
+                    break;
+                case 6:
+                    System.out.println("Placing an order...");
+                    placeOrder(scanner);
+                    break;
+                case 7:
+                    System.out.println("Order History");
+                    var allOrders = carFactory.getOrderHistory();
+                    for (Order order : allOrders)
+                    {
+                        System.out.println(order.toString());
+                    }
+                    break;
+                case 8:
                     System.out.println("Exiting...");
                     break;
                 default:
                     System.out.println("Invalid choice. Please select a valid option.");
+                    break;
             }
-        } while (choice != 5);
+        } while (choice != 8);
 
         // Close scanner to prevent resource leak
         scanner.close();
     }
 
-    private static void addCar(Scanner scanner, CarFactory carFactory) {
+    private static void placeOrder(Scanner scanner)
+    {
+        // Get customer details
+        System.out.print("Enter customer name: ");
+        scanner.nextLine();
+        String customerName = scanner.nextLine();
+        Customer customer = new Customer(customerName, MembershipType.PRIVATE);
+
+        // Display available cars for ordering
+        System.out.println("Select a car number from menu: ");
+        List<Car> availableCars = carFactory.getAllCars();
+        for (int i = 0; i < availableCars.size(); i++) {
+            System.out.println((i + 1) + ". " + availableCars.get(i).toString());
+        }
+
+        int carChoice = scanner.nextInt();
+        Car selectedCar = availableCars.get(carChoice - 1);
+
+        // Place the order
+        try
+        {
+            carFactory.placeOrder(customer, selectedCar);
+        }
+        catch (FactoryEmptyException e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private static void searchFactoryInventoryByMake(Scanner scanner)
+    {
+        System.out.println("Enter car make: ");
+        scanner.nextLine();
+        String userChoice = scanner.nextLine();
+        var carList = carFactory.searchCarsByMake(userChoice);
+        if (!carList.isEmpty())
+        {
+            for (Car car : carList)
+            {
+                System.out.println(car.toString());
+            }
+        }
+    }
+
+    private static void addCar(Scanner scanner, CarFactory carFactory)
+    {
         System.out.println("\nSelect Car Type:");
         System.out.println("1. Sports Car");
         System.out.println("2. SUV");
@@ -173,6 +240,7 @@ public class Main
         Predicate<Car> isHighPerformance = c -> c instanceof SportsCar && ((SportsCar) c).getHorsePower() > 500;
         System.out.println(car1.toString() + " - High Performance ? " + isHighPerformance.test(car1));
         System.out.println(sportsCar.toString() + " - High Performance ? " + isHighPerformance.test(sportsCar));
+
 
         // Check factory production status - enum example
         System.out.println("Factory production status: " + factory.getProductionStatus());
