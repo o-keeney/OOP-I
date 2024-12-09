@@ -139,8 +139,18 @@ public class Main
     {
         int choice;
         List<Car> carsToAdd = new ArrayList<>();
+        String factoryFullMessage = "The factory is at capacity.";
         do
         {
+            int currentFactoryCapacity = carFactory.getCurrentStockLevel() + carsToAdd.size();
+            System.out.println("CURRENT STOCK LEVEL: " + currentFactoryCapacity);
+            System.out.println("CURRENT CAPACITY: " + carFactory.getCapacity());
+            if (currentFactoryCapacity >= carFactory.getCapacity())
+            {
+                System.out.println(factoryFullMessage);
+                break;
+            }
+
             System.out.println("\nSelect Car Type:");
             System.out.println("1. Sports Car");
             System.out.println("2. SUV");

@@ -26,18 +26,18 @@ public final class CarFactory implements ICarFactory
     // Primary constructor - uses this() to assign name and and default value for capacity
     public CarFactory(String factoryName)
     {
-        this(factoryName, 5, 0);
+        this(factoryName, 1, 0);
     }
 
     public void placeOrder(Customer customer, Car car)
     {
-        if (!cars.contains(car))
+        if (!this.cars.contains(car))
         {
             throw new FactoryEmptyException("Car is not available in stock...");
         }
-        cars.remove(car);
-        currentStockLevel--;
-        orders.add(new Order(customer, car));
+        this.cars.remove(car);
+        this.currentStockLevel--;
+        this.orders.add(new Order(customer, car));
         System.out.println("Order placed: " + customer.name() + " - " + car.toString());
     }
 
@@ -48,15 +48,15 @@ public final class CarFactory implements ICarFactory
 
     public List<Car> getAllCars()
     {
-        return cars;
+        return this.cars;
     }
 
     public int getCurrentStockLevel(){
-        return currentStockLevel;
+        return this.currentStockLevel;
     }
 
     public int getCapacity(){
-        return capacity;
+        return this.capacity;
     }
 
     public List<Car> searchCarsByMake(String make)
@@ -69,22 +69,22 @@ public final class CarFactory implements ICarFactory
         Predicate<Car> byMake = car -> car.getMake().equalsIgnoreCase(makeFilter);
 
         // Use stream with the predicate to filter and collect matching cars
-        return cars.stream()
+        return this.cars.stream()
                 .filter(byMake)
                 .collect(Collectors.toList());
     }
 
     public void addCars(Car... carsList) throws FactoryFullException
     {
+        if (cars.size() >= this.capacity)
+        {
+            throw new FactoryFullException("Factory at capacity...");
+        }
+
         for (Car car : carsList)
         {
-            if (cars.size() >= capacity)
-            {
-                throw new FactoryFullException("Factory at capacity...");
-            }
-
-            cars.add(car);
-            currentStockLevel++;
+            this.cars.add(car);
+            this.currentStockLevel ++;
             System.out.println(car.toString() + " added to " + factoryName);
         }
     }
