@@ -93,6 +93,12 @@ public class Main
 
     private static void placeOrder(Scanner scanner)
     {
+        if (carFactory.getCurrentStockLevel() == 0)
+        {
+            System.out.println("The car factory is empty...");
+            return;
+        }
+
         // Get customer details
         System.out.print("Enter customer name: ");
         scanner.nextLine();
